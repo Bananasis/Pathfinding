@@ -24,20 +24,20 @@ namespace Grid
         [SerializeField] private PathfindingManager _pathfindingManager;
         [SerializeField] private GridManager _gridManager;
         private bool _hasLoadedMap;
-    //    private MapLoader _mapLoader;
+       private MapLoader _mapLoader;
         public IMapData map => _mapData;
         public bool hasLoadedMap => _hasLoadedMap;
         public Vector2Int size => _size;
 
         private void Awake()
         {
-          //  _mapLoader = new MapLoader();
+            _mapLoader = new MapLoader();
         }
 
         private void OnEnable()
         {
             _mapTypeOptions.ClearOptions();
-            //_mapTypeOptions.AddOptions(_mapLoader.mapTypes);
+            _mapTypeOptions.AddOptions(_mapLoader.mapTypes);
             UpdateMapOptions(_mapTypeOptions.value);
             _mapTypeOptions.onValueChanged.AddListener(UpdateMapOptions);
             _generateMap.onClick.AddListener(LoadEmptyMap);
@@ -49,7 +49,7 @@ namespace Grid
             _mapOptions.onValueChanged.RemoveListener(LoadMap);
             _mapOptions.ClearOptions();
             _mapOptions.AddOptions(noneOption);
-            //_mapOptions.AddOptions(_mapLoader.GetMapOptions(type));
+            _mapOptions.AddOptions(_mapLoader.GetMapOptions(type));
             _mapOptions.value = 0;
             _mapOptions.onValueChanged.AddListener(LoadMap);
         }
@@ -58,8 +58,8 @@ namespace Grid
 
         private void LoadMap(int option)
         {
-            // if (option != 0)
-            //     SetUpMap(_mapLoader.GetMap(_mapTypeOptions.value, option - 1));
+            if (option != 0)
+                SetUpMap(_mapLoader.GetMap(_mapTypeOptions.value, option - 1));
         }
         private void SetCamMode(bool isPerspective)
         {
